@@ -1,0 +1,59 @@
+{
+  "AFFINE_HULL": [
+    {"cols": 4}
+  ],
+  "BOUNDED": true,
+  "COMBINATORIAL_DIM": 3,
+  "CONE_AMBIENT_DIM": 4,
+  "CONE_DIM": 4,
+  "FACETS": [
+    ["1", "1", "-1", "0"],
+    ["1", "0", "-1", "-1"],
+    ["1", "2", "1", "1"],
+    ["1", "0", "1", "-1"],
+    ["1", "2", "0", "1"],
+    ["1", "-1", "1", "-1"],
+    ["1", "-1", "1", "1"],
+    ["1", "-1", "0", "1"],
+    ["1", "-1", "-1", "-1"],
+    ["1", "-1", "-1", "0"]
+  ],
+  "FEASIBLE": true,
+  "FULL_DIM": true,
+  "LINEALITY_DIM": 0,
+  "LINEALITY_SPACE": [
+    {"cols": 4}
+  ],
+  "N_POINTS": 7,
+  "N_VERTICES": 7,
+  "POINTED": true,
+  "POINTS": [
+    ["1", "1", "0", "0"],
+    ["1", "0", "1", "0"],
+    ["1", "0", "0", "1"],
+    ["1", "-1", "0", "1"],
+    ["1", "0", "1", "-1"],
+    ["1", "0", "-1", "0"],
+    ["1", "0", "0", "-1"]
+  ],
+  "VERTICES": [
+    ["1", "1", "0", "0"],
+    ["1", "0", "1", "0"],
+    ["1", "0", "0", "1"],
+    ["1", "-1", "0", "1"],
+    ["1", "0", "1", "-1"],
+    ["1", "0", "-1", "0"],
+    ["1", "0", "0", "-1"]
+  ],
+  "_canonical": true,
+  "_id": "1",
+  "_info": {
+    "credits": {
+      "cdd": "\nCopyright by Komei Fukuda.\nhttp://www-oldurls.inf.ethz.ch/personal/fukudak/cdd_home/\n"
+    }
+  },
+  "_ns": {
+    "polymake": ["https://polymake.org", "4.3"]
+  },
+  "_type": "polytope::Polytope<Rational>"
+}

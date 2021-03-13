@@ -1,0 +1,88 @@
+{
+  "AFFINE_HULL": [
+    {"cols": 4}
+  ],
+  "BOUNDED": true,
+  "CENTERED": false,
+  "CENTROID": ["1", "1", "2", "9/4"],
+  "COMBINATORIAL_DIM": 3,
+  "CONE_AMBIENT_DIM": 4,
+  "CONE_DIM": 4,
+  "EHRHART_POLYNOMIAL": [{"0": "1", "2": "3/2", "3": "3", "1": "3/2"}],
+  "FACETS": [
+    ["2", "-1", "-2", "14/9"],
+    ["0", "9/2", "0", "-1"],
+    ["0", "0", "9/7", "-1"],
+    ["0", "0", "0", "1"]
+  ],
+  "FAR_FACE": [],
+  "FEASIBLE": true,
+  "FULL_DIM": true,
+  "GORENSTEIN": false,
+  "GORENSTEIN_INDEX": null,
+  "GORENSTEIN_VECTOR": null,
+  "GRAPH": {
+    "ADJACENCY": [
+      [1, 2, 3],
+      [0, 2, 3],
+      [0, 1, 3],
+      [0, 1, 2]
+    ]
+  },
+  "LATTICE": true,
+  "LATTICE_VOLUME": "18",
+  "LATTICE_WIDTH": "2",
+  "LATTICE_WIDTH_DIRECTION": {"1": "1", "_dim": 4},
+  "LINEALITY_DIM": 0,
+  "LINEALITY_SPACE": [
+    {"cols": 4}
+  ],
+  "MONOID_GRADING": {"0": "1", "_dim": 4},
+  "N_INTERIOR_LATTICE_POINTS": "2",
+  "N_LATTICE_POINTS": "7",
+  "N_VERTICES": 4,
+  "POINTED": true,
+  "REFLEXIVE": false,
+  "TRIANGULATION": [
+    {
+      "FACETS": [
+        [0, 1, 2, 3]
+      ],
+      "_id": "unnamed#0"
+    }
+  ],
+  "VERTICES": [
+    ["1", "0", "0", "0"],
+    ["1", "2", "0", "0"],
+    ["1", "0", "1", "0"],
+    ["1", "2", "7", "9"]
+  ],
+  "VERTICES_IN_FACETS": [
+    [1, 2, 3],
+    [0, 2, 3],
+    [0, 1, 3],
+    [0, 1, 2],
+    {"cols": 4}
+  ],
+  "VOLUME": "3",
+  "_attrs": {
+    "LATTICE_WIDTH_DIRECTION": {
+      "_type": "SparseVector<Integer>"
+    },
+    "MONOID_GRADING": {
+      "_type": "SparseVector<Integer>"
+    }
+  },
+  "_canonical": true,
+  "_id": "3",
+  "_info": {
+    "credits": {
+      "cdd": "\nCopyright by Komei Fukuda.\nhttp://www-oldurls.inf.ethz.ch/personal/fukudak/cdd_home/\n",
+      "latte": "\nCopyright by Matthias Koeppe, Jesus A. De Loera and others.\nhttp://www.math.ucdavis.edu/~latte/\n"
+    }
+  },
+  "_ns": {
+    "polymake": ["https://polymake.org", "4.3"]
+  },
+  "_type": "polytope::Polytope<Rational>"
+}

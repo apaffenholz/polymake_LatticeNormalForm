@@ -1,0 +1,195 @@
+#  Copyright (c) 2020-2021
+#  Andreas Paffenholz
+#  Technische Universität Darmstadt, Germany
+#  https://www2.mathematik.tu-darmstadt.de/~paffenholz
+#
+#  This program is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU General Public License as published by the
+#  Free Software Foundation; either version 2, or (at your option) any
+#  later version: http://www.gnu.org/licenses/gpl.txt.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#-------------------------------------------------------------------------------
+
+# @category Geometry
+# Returns the polytope with vertices in affine normal form
+# @param Polytope P polytope
+# @option bool apply_palp_permutation apply the additional palp permutation
+# @return Polytope
+# @example
+# > $c = cube(2);
+# > $cnf = polytope_in_affine_normal_form($c);
+# > polytope > print $cnf->VERTICES;
+# | 1 0 0
+# | 1 2 0
+# | 1 0 2
+# | 1 2 2
+user_function polytope_in_affine_normal_form(Polytope<Rational>, { apply_palp_permutation=>false } ) {
+    my ($p, $options) = @_;
+
+    if ( !$p->FULL_DIM ) {
+        die "polytope must be full dimensional";
+    }
+
+    my @res = affine_normal_form($p, $options);
+    my $m   = new Matrix<Rational>($res[0]);
+    $m      = ones_vector<Rational>($m->rows())|$m;
+
+    return new Polytope(VERTICES=>$m);
+}
+
+# @category Geometry
+# Returns the polytope with vertices in normal form
+# @param Polytope P polytope
+# @option bool apply_palp_permutation apply the additional palp permutation
+# @return Polytope
+# @example
+# > $c = cube(2);
+# > $cnf = polytope_in_normal_form($c);
+# > polytope > print $cnf->VERTICES;
+# | 1 1 0
+# | 1 1 2
+# | 1 -1 -2
+# | 1 -1 0
+user_function polytope_in_normal_form(Polytope<Rational>, { apply_palp_permutation=>false } ) {
+    my ($p, $options) = @_;
+
+    if ( !$p->FULL_DIM ) {
+        die "polytope must be full dimensional";
+    }
+
+    my @res = normal_form($p, $options);
+    my $m   = new Matrix<Rational>($res[0]);
+    $m      = ones_vector<Rational>($m->rows())|$m;
+
+    return new Polytope(VERTICES=>$m);
+}
+
+# @category Geometry
+# Checks if two polytopes in affine normal form are lattice equivalent (have the same vertex matrix)
+# @param Polytope P1 polytope
+# @param Polytope P1 polytope
+# @return bool
+# @example
+# > $c = cube(2);
+# > $s = simplex(2);
+# > print normal_form_lattice_equivalent($c1,c2);
+# | false
+user_function normal_form_lattice_equivalent(Polytope<Rational>, Polytope<Rational> ) {
+    my ($p,$q) = @_;
+
+    if ( !$p->FULL_DIM ) {
+        die "polytope must be full dimensional";
+    }
+
+    return false if dense($p->VERTICES) != dense($q->VERTICES);
+    return true;
+}
+
+# @category Geometry
+# Checks if two polytopes are lattice equivalent
+# @param Polytope P1 polytope
+# @param Polytope P1 polytope
+# @return bool
+# @example
+# > $c = cube(2);
+# > $s = simplex(2);
+# > print normal_form_lattice_equivalent($c1,c2);
+# | false
+user_function lattice_equivalent(Polytope<Rational>, Polytope<Rational> ) {
+    my ($p,$q) = @_;
+
+    if ( !$p->FULL_DIM || !$q->FULL_DIM ) {
+        die "we can only check lattice equivalence for full dimensional polytopes";
+    }
+
+    return false if $p->DIM        != $q->DIM;
+    return false if $p->N_VERTICES != $q->N_VERTICES;
+    return false if $p->N_FACETS   != $q->N_FACETS;
+
+    my $pnf = polytope_in_affine_normal_form($p);
+    my $qnf = polytope_in_affine_normal_form($q);
+
+    return false if dense($pnf->VERTICES) != dense($qnf->VERTICES);
+    return true;
+}
+
+# @category Geometry
+# Computes the affine vertex matrix in affine normal form, the transformation leading to it, and the translation shifting one vertex into the origin
+# @param Polytope P polytope
+# @option bool apply_palp_permutation apply the additional palp permutation
+# @return Array nf first element is the normal form, second the transformation, third the translation
+# @example
+# > @nf = affine_normal_form($c);
+# > print $nf[0];
+# | 0 0
+# | 2 0
+# | 0 2
+# | 2 2
+# >  print $nf[1];
+# | 0 1
+# | 1 0
+# >  print $nf[2];
+# | 1 1
+user_function affine_normal_form(Polytope<Rational>, { apply_palp_permutation=>false }) {
+    my ($p, $options) = @_;
+
+    if ( !$p->FULL_DIM ) {
+        die "polytope must be full dimensional";
+    }
+
+
+    my $v  = new Matrix<Integer>($p->VERTICES);
+    my $pm = $p->PAIRING_MATRIX;
+
+    return affine_normal_form_from_vertices_and_pairing_matrix(dehomogenize($v),$pm,$options->{'apply_palp_permutation'});
+}
+
+# @category Geometry
+# Computes the affine vertex matrix in affine normal form and the transformation leading to it
+# @param Polytope P polytope
+# @option bool apply_palp_permutation apply the additional palp permutation
+# @return Array nf first element is the normal form, second the translation
+# @example
+# > @nf = normal_form($c);
+# > print $nf[0];
+# | 1 0
+# | 1 2
+# | -1 -2
+# | -1 0
+# >  print $nf[1];
+# | 1 1
+# | 0 -1
+user_function normal_form(Polytope<Rational>, { apply_palp_permutation=>false }) {
+    my ($p, $options) = @_;
+
+    if ( !$p->FULL_DIM ) {
+        die "polytope must be full dimensional";
+    }
+
+    my $v  = new Matrix<Integer>($p->VERTICES);
+    my $pm = $p->PAIRING_MATRIX;
+
+    return normal_form_from_vertices_and_pairing_matrix(dehomogenize($v),$pm,$options->{'apply_palp_permutation'});
+}
+
+
+object Polytope {
+
+    # @category Geometry
+    # returns the pairing matrix of the polytope
+    # @return Matrix<Integer>
+    user_method PAIRING_MATRIX {
+        my ($self) = @_;
+        my $F = primitive($self->FACETS);
+        my $V = $self->VERTICES;
+
+        my $pairing_matrix = $F * transpose($V);
+
+        return new Matrix<Integer>($pairing_matrix);
+    }
+
+}
